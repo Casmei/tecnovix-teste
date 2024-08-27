@@ -20,13 +20,17 @@ class BookService implements BookServiceInterface
         $this->storageService = $storageService;
     }
 
-    public function getAllBooks($query = null)
+    public function getAllBooks($searchTerm = null)
     {
         $booksQuery = Book::query();
 
-        if ($query) {
-            $booksQuery->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($query) . '%'])
-                ->orWhereRaw('LOWER(author) LIKE ?', ['%' . strtolower($query) . '%']);
+        if ($searchTerm) {
+            $booksQuery->where(function ($query) use ($searchTerm) {
+                $query->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($searchTerm) . '%'])
+                    ->orWhereHas('author', function ($query) use ($searchTerm) {
+                        $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($searchTerm) . '%']);
+                    });
+            });
         }
 
         $books = $booksQuery->get();
