@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('author', 150);
             $table->text('description')->nullable();
             $table->year('year_of_publication');
-            $table->string('image_path', 2048)->nullable();
+            $table->string('image_path', 2048);
             $table->string('isbn', 13)->unique();
             $table->timestamps();
 
