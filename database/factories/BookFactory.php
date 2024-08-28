@@ -12,9 +12,9 @@ class BookFactory extends Factory
         return [
             'title' => $this->faker->sentence(3),
             'author_id' => Author::factory(),
-            'description' => $this->faker->paragraph(13),
+            'description' => $this->faker->paragraph(10),
             'year_of_publication' => $this->faker->year,
-            'isbn' => $this->faker->isbn13,
+            'isbn' => $this->faker->isbn10,
         ];
     }
 }

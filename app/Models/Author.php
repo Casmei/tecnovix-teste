@@ -10,6 +10,8 @@ class Author extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function address()
     {
         return $this->hasOne(Address::class);

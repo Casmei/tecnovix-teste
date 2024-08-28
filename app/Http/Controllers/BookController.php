@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\BookNotFoundException;
 use App\Http\Requests\BookRequest;
 use App\Models\Book;
 use App\Services\Contracts\BookServiceInterface;
@@ -34,6 +35,14 @@ class BookController extends Controller
     {
         $data = (object) $request->validated();
         $this->bookService->createBook($data);
+    }
+
+    public function fetchBookData(Request $request)
+    {
+        $isbn = $request->query('isbn');
+        $bookData = $this->bookService->getBookByISBN($isbn);
+
+        return response()->json($bookData);
     }
 
     public function show(Book $book)

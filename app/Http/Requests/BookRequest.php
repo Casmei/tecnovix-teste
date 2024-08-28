@@ -26,7 +26,7 @@ class BookRequest extends FormRequest
             'author' => 'required|string|max:150',
             'description' => 'nullable|string',
             'year_of_publication' => 'required|digits:4|integer|lte:' . now()->year,
-            'isbn' => 'required|string|size:13|unique:books,isbn',
+            'isbn' => 'required|string|size:10|unique:books,isbn',
             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }

@@ -2,17 +2,30 @@
 
 namespace App\Services;
 
+use App\Exceptions\BookNotFoundException;
 use App\Models\Book;
+use App\Services\Contracts\AuthorServiceInterface;
+use App\Services\Contracts\BookProviderInterface;
 use App\Services\Contracts\BookServiceInterface;
 use App\Services\Contracts\StorageServiceInterface;
 
 class BookService implements BookServiceInterface
 {
     protected $storageService;
+    protected $bookProvider;
+    protected $authorService;
 
-    public function __construct(StorageServiceInterface $storageService)
+
+    public function __construct(
+        StorageServiceInterface $storageService,
+        BookProviderInterface $bookProvider,
+        AuthorServiceInterface $authorService
+    )
     {
         $this->storageService = $storageService;
+        $this->bookProvider = $bookProvider;
+        $this->authorService = $authorService;
+
     }
 
     public function setStorageService(StorageServiceInterface $storageService): void
@@ -22,18 +35,7 @@ class BookService implements BookServiceInterface
 
     public function getAllBooks($searchTerm = null)
     {
-        $booksQuery = Book::query();
-
-        if ($searchTerm) {
-            $booksQuery->where(function ($query) use ($searchTerm) {
-                $query->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($searchTerm) . '%'])
-                    ->orWhereHas('author', function ($query) use ($searchTerm) {
-                        $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($searchTerm) . '%']);
-                    });
-            });
-        }
-
-        $books = $booksQuery->get();
+        $books = Book::search($searchTerm)->latest()->get();
 
         return $books->map(function ($book) {
             if ($book->image_path) {
@@ -55,7 +57,12 @@ class BookService implements BookServiceInterface
             $data->image_path = $imagePath;
         }
 
-        return Book::create((array) $data);
+        $author = $this->authorService->createAuthor($data->author);
+
+        $bookData = (array) $data;
+        $bookData['author_id'] = $author->id;
+
+        return Book::create($bookData);
     }
 
     public function updateBook(int $id, object $data)
@@ -69,5 +76,21 @@ class BookService implements BookServiceInterface
     {
         $book = Book::findOrFail($id);
         return $book->delete();
+    }
+
+    public function searchBooks(string $query): array
+    {
+        return $this->bookProvider->searchBooks($query);
+    }
+
+    public function getBookByISBN(string $isbn): ?array
+    {
+        $book = $this->bookProvider->getBookByISBN($isbn);
+
+        if (!$book) {
+            throw new BookNotFoundException("Book with ISBN {$isbn} not found.");
+        }
+
+        return $book;
     }
 }

@@ -11,4 +11,6 @@ interface BookServiceInterface
     public function updateBook(int $id, object $data);
     public function deleteBook(int $id);
     public function setStorageService(StorageServiceInterface $storageProvider);
+    public function searchBooks(string $query): array;
+    public function getBookByISBN(string $isbn): ?array;
 }

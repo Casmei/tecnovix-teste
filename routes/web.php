@@ -7,6 +7,7 @@ Route::redirect('/', '/books');
 Route::prefix('/books')->group(function () {
     Route::controller(BookController::class)->group(function () {
         Route::get('', 'list')->name('books.list');
+        Route::get('/auto-complete', 'fetchBookData')->name('books.fetch');
         Route::get('/create', 'create')->name('books.create');
         Route::post('', 'store')->name('books.store');
     });
