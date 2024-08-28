@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 class BookNotFoundException extends Exception
 {
     /**
-     * Cria uma nova instância da exceção.
+     * Create a new exception
      *
      * @param  string  $isbn
      * @return void

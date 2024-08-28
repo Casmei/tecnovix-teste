@@ -9,6 +9,17 @@ class Address extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'zip_code',
+        'street',
+        'complement',
+        'unit',
+        'neighborhood',
+        'city',
+        'state',
+        'author_id',
+    ];
+
     public function author()
     {
         return $this->belongsTo(Author::class);

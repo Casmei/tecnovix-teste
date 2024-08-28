@@ -1,4 +1,4 @@
-<form action="{{route('books.store')}}" method="POST" enctype="multipart/form-data" class="max-w-6xl mx-auto p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none">
+<form action="{{route('books.store')}}" id="create-book" method="POST" enctype="multipart/form-data" class="max-w-6xl mx-auto p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none">
     @csrf
     <h1 class="text-4xl font-medium mb-4 text-white">Book detail</h1>
 
@@ -10,7 +10,7 @@
                     <path d="M7.833 2c-.507 0-.98.216-1.318.576A1.92 1.92 0 0 0 6 3.89V21a1 1 0 0 0 1.625.78L12 18.28l4.375 3.5A1 1 0 0 0 18 21V3.889c0-.481-.178-.954-.515-1.313A1.808 1.808 0 0 0 16.167 2H7.833Z"/>
                 </svg>
             </div>
-            <input type="text" name="isbn" value="{{ old('isbn') }}" id="ispn" class="ps-10 p-2.5 mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-600 text-white" placeholder="Search isbn number..." required />
+            <input type="text" name="isbn" id="isbn" value="{{ old('isbn') }}" id="ispn" class="ps-10 p-2.5 mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-600 text-white" placeholder="Search isbn number..." />
         </div>
         <button type="button" onclick="searchISBN()" class="px-6 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -80,7 +80,8 @@
     <h1 class="text-4xl font-medium mb-4 text-white">Author address detail</h1>
 
     <label for="cep" class="block text-sm font-medium text-gray-700 dark:text-gray-300">CEP</label>
-    <div class="flex ">
+
+    <div class="flex">
         <div class="relative w-full">
             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
@@ -88,18 +89,18 @@
                 </svg>
             </div>
 
-            <input type="text" id="cep" class="ps-10 p-2.5 mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-600 text-white" placeholder="Search cep number..." />
+            <input type="text" id="zip_code" name="zip_code" value="{{old('zip_code')}}" class="ps-10 p-2.5 mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-600 text-white" placeholder="Search zip code number..." />
         </div>
-        @error('cep')
-            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-        @enderror
-        <button type="submit" class="px-6 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <button onclick="searchZipCode()" class="px-6 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
             </svg>
             <span class="sr-only">Search</span>
         </button>
     </div>
+    @error('zip_code')
+        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+    @enderror
 
     <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
 
@@ -121,9 +122,9 @@
         </div>
 
         <div class="mb-4">
-            <label for="country" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Country</label>
-            <input type="text" name="country" value="{{ old('country') }}" id="country" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-600 text-gray-900 dark:text-gray-100">
-            @error('country')
+            <label for="neighborhood" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Neighborhood</label>
+            <input type="text" name="neighborhood" value="{{ old('neighborhood') }}" id="neighborhood" class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 dark:focus:ring-red-600 text-gray-900 dark:text-gray-100">
+            @error('neighborhood')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
             @enderror
         </div>
@@ -156,14 +157,19 @@
     </div>
 
     <div class="text-right">
-        <button type="submit" class="px-4 py-2 bg-green-500 text-white font-semibold rounded-md shadow hover:bg-red-600 transition duration-150">Save book</button>
+        <button type="submit" id="submit-button" class="px-4 py-2 bg-green-500 text-white font-semibold rounded-md shadow hover:bg-red-600 transition duration-150">Save book</button>
     </div>
 </form>
 
 <script>
+    $(document).ready(function(){
+        $('#isbn').inputmask('**********');
+        $('#zip_code').inputmask('99999-999');
+    });
+
     function showToast(message, type = 'error') {
         const toast = document.createElement('div');
-        toast.className = `fixed bottom-4 right-4 p-4 rounded-md text-white ${type === 'error' ? 'bg-red-500' : 'bg-green-500'} shadow-lg transition-opacity duration-500`;
+        toast.className = `fixed top-4 right-4 p-4 rounded-md text-white ${type === 'error' ? 'bg-red-500' : 'bg-green-500'} shadow-lg transition-opacity duration-500`;
         toast.textContent = message;
         document.body.appendChild(toast);
 
@@ -176,7 +182,9 @@
     }
 
     function searchISBN() {
-        const isbn = document.getElementById('ispn').value;
+        event.preventDefault();
+
+        const isbn = document.getElementById('isbn').value;
 
         if (isbn) {
             fetch(`/books/auto-complete?isbn=${isbn}`, {
@@ -203,13 +211,53 @@
                 showToast('An error occurred while fetching book information.');
             });
         }
+    };
+
+    function searchZipCode() {
+        event.preventDefault();
+
+        const zip_code = $('#zip_code').inputmask('unmaskedvalue');
+
+        if (zip_code) {
+            fetch(`/addresses?cep=${zip_code}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    showToast(data.message);
+                } else {
+                    document.getElementById('street').value = data.street || '';
+                    document.getElementById('complement').value = data.complement || '';
+                    document.getElementById('unit').value = data.unit || '';
+                    document.getElementById('city').value = data.city || '';
+                    document.getElementById('state').value = data.state || '';
+                    document.getElementById('neighborhood').value = data.neighborhood || '';
+
+                    showToast('Cep information loaded successfully!', 'success');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('An error occurred while fetching cep information.');
+            });
+        }
     }
 
-    // Adicionar evento de tecla 'Enter' ao campo ISBN
     document.getElementById('ispn').addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
             event.preventDefault();
             searchISBN();
+        }
+    });
+
+    document.getElementById('zip_code').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            searchCep();
         }
     });
 </script>

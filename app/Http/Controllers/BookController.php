@@ -6,6 +6,7 @@ use App\Exceptions\BookNotFoundException;
 use App\Http\Requests\BookRequest;
 use App\Models\Book;
 use App\Services\Contracts\BookServiceInterface;
+use App\Services\Contracts\StorageServiceInterface;
 use App\Services\External\S3StorageService;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class BookController extends Controller
 {
     protected $bookService;
 
-    public function __construct(BookServiceInterface $bookService, S3StorageService $storageService)
+    public function __construct(BookServiceInterface $bookService, StorageServiceInterface $storageService)
     {
         $this->bookService = $bookService;
         $this->bookService->setStorageService($storageService);

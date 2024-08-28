@@ -8,24 +8,31 @@ use App\Services\Contracts\AuthorServiceInterface;
 use App\Services\Contracts\BookProviderInterface;
 use App\Services\Contracts\BookServiceInterface;
 use App\Services\Contracts\StorageServiceInterface;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class BookService implements BookServiceInterface
 {
     protected $storageService;
     protected $bookProvider;
     protected $authorService;
+    protected $addressService;
+
 
 
     public function __construct(
         StorageServiceInterface $storageService,
         BookProviderInterface $bookProvider,
-        AuthorServiceInterface $authorService
+        AuthorServiceInterface $authorService,
+        AddressService $addressService
+
+
     )
     {
         $this->storageService = $storageService;
         $this->bookProvider = $bookProvider;
         $this->authorService = $authorService;
-
+        $this->addressService = $addressService;
     }
 
     public function setStorageService(StorageServiceInterface $storageService): void
@@ -52,18 +59,38 @@ class BookService implements BookServiceInterface
 
     public function createBook(object $data)
     {
-        if (isset($data->image_path)) {
-            $imagePath = $this->storageService->storeFile($data->image_path, 'books/' . $data->isbn);
-            $data->image_path = $imagePath;
+        $imagePath = null;
+
+        try {
+            DB::beginTransaction();
+
+            if (isset($data->image_path)) {
+                $imagePath = $this->storageService->storeFile($data->image_path, 'books/' . $data->isbn);
+                $data->image_path = $imagePath;
+            }
+
+            $author = $this->authorService->createAuthor($data->author);
+            $this->addressService->createAddress($data, $author);
+
+            $bookData = (array) $data;
+            $bookData['author_id'] = $author->id;
+
+            $book = Book::create($bookData);
+
+            DB::commit();
+
+            return $book;
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            if ($imagePath) {
+                $this->storageService->deleteFile($imagePath);
+            }
+
+            throw $e;
         }
-
-        $author = $this->authorService->createAuthor($data->author);
-
-        $bookData = (array) $data;
-        $bookData['author_id'] = $author->id;
-
-        return Book::create($bookData);
     }
+
 
     public function updateBook(int $id, object $data)
     {
