@@ -9,23 +9,14 @@ class GoogleBookService implements BookProviderInterface
 {
     protected $baseUrl;
     protected $apiKey;
+    protected $providerName;
+
 
     public function __construct()
     {
         $this->baseUrl = 'https://www.googleapis.com/books/v1/volumes';
         $this->apiKey = config('services.google_books.api_key');
-    }
-
-    public function searchBooks(string $query): array
-    {
-        $response = Http::get($this->baseUrl, [
-            'q' => $query,
-            'key' => $this->apiKey
-        ]);
-
-        dd($response);
-
-        return $response->json()['items'] ?? [];
+        $this->providerName = 'Google Book';
     }
 
     public function getBookByISBN(string $isbn): ?array
@@ -36,5 +27,10 @@ class GoogleBookService implements BookProviderInterface
         ]);
 
         return $response->json()['items'][0] ?? null;
+    }
+
+    public function getProviderName(): string
+    {
+        return $this->providerName;
     }
 }

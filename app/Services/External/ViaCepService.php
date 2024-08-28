@@ -9,15 +9,22 @@ use Illuminate\Support\Facades\Http;
 class ViaCepService implements AddressProviderInterface
 {
     protected $baseUrl;
+    protected $providerName;
 
     public function __construct()
     {
         $this->baseUrl = 'https://viacep.com.br/ws';
+        $this->providerName = 'Via Cep';
+
     }
 
-    public function findAddressByCep(int $cep): Address
+    public function findAddressByZipCode(int $cep): Address | null
     {
         $response = Http::get($this->baseUrl . '/' . $cep . '/json');
+
+        if ($response->json()['erro']) {
+            return null;
+        }
 
         return $this->transformDataToEntity((object) $response->json());
     }
@@ -35,5 +42,10 @@ class ViaCepService implements AddressProviderInterface
         $address->state = $data->uf;
 
         return $address;
+    }
+
+    public function getProviderName(): string
+    {
+        return $this->providerName;
     }
 }

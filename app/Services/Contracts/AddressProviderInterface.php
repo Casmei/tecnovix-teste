@@ -6,5 +6,6 @@ use App\Models\Address;
 
 interface AddressProviderInterface
 {
-    public function findAddressByCep(int $cep): Address;
+    public function findAddressByZipCode(int $cep): Address | null;
+    public function getProviderName(): string;
 }

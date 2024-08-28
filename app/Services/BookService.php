@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Exceptions\BookNotFoundException;
+use App\Exceptions\NotFoundProviderException;
 use App\Models\Book;
 use App\Services\Contracts\AuthorServiceInterface;
 use App\Services\Contracts\BookProviderInterface;
@@ -105,17 +105,15 @@ class BookService implements BookServiceInterface
         return $book->delete();
     }
 
-    public function searchBooks(string $query): array
-    {
-        return $this->bookProvider->searchBooks($query);
-    }
-
     public function getBookByISBN(string $isbn): ?array
     {
         $book = $this->bookProvider->getBookByISBN($isbn);
 
         if (!$book) {
-            throw new BookNotFoundException("Book with ISBN {$isbn} not found.");
+            throw new NotFoundProviderException(
+                "Book with ISBN {$isbn} not found.",
+                $this->bookProvider->getProviderName()
+            );
         }
 
         return $book;

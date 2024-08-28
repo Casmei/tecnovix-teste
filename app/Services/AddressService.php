@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\NotFoundProviderException;
 use App\Models\Address;
 use App\Models\Author;
 use App\Services\Contracts\AddressProviderInterface;
@@ -23,9 +24,18 @@ class AddressService implements AddressServiceInterface
         $this->addressProvider = $addressProvider;
     }
 
-    public function findAddressByCep(int $cep): Address
+    public function findAddressByZipCode(int $zipCode): Address
     {
-        return $this->addressProvider->findAddressByCep($cep);
+        $address = $this->addressProvider->findAddressByZipCode($zipCode);
+
+        if (!$address) {
+            throw new NotFoundProviderException(
+                "Address with zip code {$zipCode} not found.",
+                $this->addressProvider->getProviderName()
+            );
+        }
+
+        return $address;
     }
 
     public function createAddress(object $data, Author $author): void
