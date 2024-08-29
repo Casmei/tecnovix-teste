@@ -33,10 +33,11 @@ Este projeto é uma aplicação Laravel que utiliza Docker Compose para facilita
 
     Este comando inicia todos os serviços definidos no arquivo `docker-compose.yml`.
 
-6. **Preparando o banco:**
+6. **Preparando o ambiente:**
 
     ```bash
     docker exec -it laravel_app bash
+    composer install
     php artisan key:generate
     php artisan migrate --seed
     ```
