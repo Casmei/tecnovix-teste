@@ -34,6 +34,10 @@
                     <x-book-card :book="$book"/>
                 @endforeach
             </div>
+
+            <div class="mt-4 pagination">
+                {{ $books->links() }}
+            </div>
         </div>
     </div>
 @endsection

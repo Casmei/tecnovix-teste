@@ -36,15 +36,19 @@ class BookService implements BookServiceInterface
         $this->storageService = $storageService;
     }
 
-    public function getAllBooks($searchTerm = null)
+    public function getAllBooks($searchTerm = null, $perPage = 4)
     {
-        $books = Book::search($searchTerm)->latest()->get();
+        $books = Book::search($searchTerm)
+            ->latest()
+            ->paginate($perPage);
 
-        return $books->map(function ($book) {
+        // Usando transform na coleção paginada
+        $books->getCollection()->transform(function ($book) {
             $this->getImage($book);
-
             return $book;
         });
+
+        return $books;
     }
 
     public function getBookById(int $id)

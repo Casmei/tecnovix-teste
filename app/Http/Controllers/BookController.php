@@ -34,6 +34,8 @@ class BookController extends Controller
     {
         $data = (object) $request->validated();
         $this->bookService->createBook($data);
+
+        return redirect()->route('books.list');
     }
 
     public function fetchBookData(Request $request)
@@ -52,7 +54,8 @@ class BookController extends Controller
 
     public function edit(Book $book)
     {
-        //
+        $book = $this->bookService->getBookById($book->id);
+        return view('book.edit', ['book' => $book]);
     }
 
     public function update(Request $request, Book $book)

@@ -27,7 +27,7 @@
                 <span class="font-medium">ISBN:</span> {{ $book->isbn }}
             </p>
             <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed max-h-20 overflow-hidden">
-                {{ $limitDescription ? Str::limit($book->description, 150, '...') : $book->description}}
+                {{ $limitDescription ? Str::limit($book->description, 100, '...') : $book->description}}
             </p>
         </div>
     </div>

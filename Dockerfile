@@ -29,4 +29,4 @@ RUN chown -R www-data:www-data /var/www && chmod -R 755 /var/www/storage
 EXPOSE 9000
 
 # Comando para iniciar o PHP-FPM
-CMD ["chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache && php-fpm"]
+CMD ["php-fpm"]

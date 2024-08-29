@@ -1,3 +1,5 @@
+<x-back-button :route="route('books.list')"/>
+
 <form action="{{route('books.store')}}" id="create-book" method="POST" enctype="multipart/form-data" class="max-w-6xl mx-auto p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none">
     @csrf
     <h1 class="text-4xl font-medium mb-4 text-white">Book detail</h1>
