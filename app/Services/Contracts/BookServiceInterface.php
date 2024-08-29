@@ -2,7 +2,6 @@
 
 namespace App\Services\Contracts;
 
-
 interface BookServiceInterface
 {
     public function getAllBooks();
@@ -12,4 +11,5 @@ interface BookServiceInterface
     public function deleteBook(int $id);
     public function setStorageService(StorageServiceInterface $storageProvider);
     public function getBookByISBN(string $isbn): ?array;
+    public function findOrCreateByIsbn(string $isbn): array;
 }

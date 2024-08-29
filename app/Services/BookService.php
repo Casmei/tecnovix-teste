@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\NotFoundProviderException;
+use App\Models\Author;
 use App\Models\Book;
 use App\Services\Contracts\AuthorServiceInterface;
 use App\Services\Contracts\BookProviderInterface;
@@ -93,12 +94,37 @@ class BookService implements BookServiceInterface
         }
     }
 
-
     public function updateBook(int $id, object $data)
     {
         $book = Book::findOrFail($id);
-        $book->update($data);
-        return $book;
+        $oldImagePath = $book->image_path;
+        $newImagePath = null;
+
+        try {
+            DB::beginTransaction();
+
+            if (isset($data->image_path)) {
+                $newImagePath = $this->storageService->storeFile($data->image_path, 'books/' . $data->isbn);
+                $data->image_path = $newImagePath;
+            }
+
+            $book->update((array) $data);
+
+            if ($newImagePath && $oldImagePath) {
+                $this->storageService->deleteFile($oldImagePath);
+            }
+
+            DB::commit();
+            return $book;
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            if ($newImagePath) {
+                $this->storageService->deleteFile($newImagePath);
+            }
+
+            throw $e;
+        }
     }
 
     public function deleteBook(int $id)
@@ -126,5 +152,43 @@ class BookService implements BookServiceInterface
         if ($book->image_path) {
             $book->image_path = $this->storageService->getFileUrl($book->image_path);
         }
+    }
+
+    public function findOrCreateByIsbn(string $isbn): array
+    {
+        $book = Book::where('isbn', $isbn)->first();
+
+        if ($book) {
+            return $book->toArray();
+        }
+
+        $bookData = $this->getBookByISBN($isbn);
+
+        if (isset($bookData)) {
+            $volumeInfo = $bookData['volumeInfo'];
+
+            $book = Book::create([
+                'title' => $volumeInfo['title'] ?? null,
+                'description' => $volumeInfo['description'] ?? null,
+                'isbn' => $isbn,
+                'year_of_publication' => $volumeInfo['publishedDate'] ?? null,
+                'author_id' => $this->findOrCreateAuthor($volumeInfo['authors'][0] ?? null),
+                'image_path' => $volumeInfo['imageLinks']['thumbnail'] ?? null,
+            ]);
+
+            return $book->toArray();
+        }
+
+        return [];
+    }
+
+    private function findOrCreateAuthor(?string $authorName): ?int
+    {
+        if (!$authorName) {
+            return null;
+        }
+
+        $author = $this->authorService->createAuthor($authorName);
+        return $author->id;
     }
 }
