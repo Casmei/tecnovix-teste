@@ -37,6 +37,7 @@ Este projeto é uma aplicação Laravel que utiliza Docker Compose para facilita
 
     ```bash
     docker exec -it laravel_app bash
+    php artisan key:generate
     php artisan migrate --seed
     ```
 
