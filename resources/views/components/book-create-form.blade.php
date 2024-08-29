@@ -79,7 +79,7 @@
 
     <h1 class="text-4xl font-medium mb-4 text-white">Author address detail</h1>
 
-    <label for="cep" class="block text-sm font-medium text-gray-700 dark:text-gray-300">CEP</label>
+    <label for="zip_code" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Zip code</label>
 
     <div class="flex">
         <div class="relative w-full">
@@ -187,7 +187,7 @@
         const isbn = document.getElementById('isbn').value;
 
         if (isbn) {
-            fetch(`/books/auto-complete?isbn=${isbn}`, {
+            fetch(`/api/books/auto-complete?isbn=${isbn}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -219,7 +219,7 @@
         const zip_code = $('#zip_code').inputmask('unmaskedvalue');
 
         if (zip_code) {
-            fetch(`/addresses?cep=${zip_code}`, {
+            fetch(`/api/addresses?zip_code=${zip_code}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -237,12 +237,12 @@
                     document.getElementById('state').value = data.state || '';
                     document.getElementById('neighborhood').value = data.neighborhood || '';
 
-                    showToast('Cep information loaded successfully!', 'success');
+                    showToast('Zip code information loaded successfully!', 'success');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                showToast('An error occurred while fetching cep information.');
+                showToast('An error occurred while fetching zip code information.');
             });
         }
     }
@@ -257,7 +257,7 @@
     document.getElementById('zip_code').addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-            searchCep();
+            searchZipCode();
         }
     });
 </script>

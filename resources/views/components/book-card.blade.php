@@ -1,4 +1,4 @@
-<a href="{{ route('books.store') }}" class="block p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex-grow motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+<a href="{{ route('books.show', ['book' => $book->id]) }}" class="block p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex-grow motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
     <div class="flex flex-col lg:flex-row">
         @if($book->image_path)
             <div class="flex-shrink-0">
@@ -27,7 +27,7 @@
                 <span class="font-medium">ISBN:</span> {{ $book->isbn }}
             </p>
             <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed max-h-20 overflow-hidden">
-                {{ Str::limit($book->description, 150, '...') }}
+                {{ $limitDescription ? Str::limit($book->description, 150, '...') : $book->description}}
             </p>
         </div>
     </div>

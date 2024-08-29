@@ -7,6 +7,6 @@ use App\Models\Author;
 
 interface AddressServiceInterface
 {
-    public function findAddressByZipCode(int $cep): Address;
+    public function findAddressByZipCode(int $zipCode): Address;
     public function createAddress(object $address, Author $authorId): void;
 }

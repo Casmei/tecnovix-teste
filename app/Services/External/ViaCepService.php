@@ -18,15 +18,16 @@ class ViaCepService implements AddressProviderInterface
 
     }
 
-    public function findAddressByZipCode(int $cep): Address | null
+    public function findAddressByZipCode(int $zipCode): Address | null
     {
-        $response = Http::get($this->baseUrl . '/' . $cep . '/json');
+        $response = Http::get($this->baseUrl . '/' . $zipCode . '/json');
+        $response = (object) $response->json();
 
-        if ($response->json()['erro']) {
+        if (isset($response->erro)) {
             return null;
         }
 
-        return $this->transformDataToEntity((object) $response->json());
+        return $this->transformDataToEntity($response);
     }
 
     private function transformDataToEntity(object $data): Address

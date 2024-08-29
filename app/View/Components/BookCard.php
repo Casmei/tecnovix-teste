@@ -2,21 +2,25 @@
 
 namespace App\View\Components;
 
+use App\Models\Book;
 use Illuminate\View\Component;
 
 class BookCard extends Component
 {
-    public $book;
+    public Book $book;
+    public bool $limitDescription;
 
     /**
      * Create a new component instance.
      *
-     * @param  mixed  $book
+     * @param  Book  $book
+     * @param  bool  $limitDescription
      * @return void
      */
-    public function __construct($book)
+    public function __construct(Book $book, $limitDescription = true)
     {
         $this->book = $book;
+        $this->limitDescription = $limitDescription;
     }
 
     /**

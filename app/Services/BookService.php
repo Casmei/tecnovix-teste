@@ -18,8 +18,6 @@ class BookService implements BookServiceInterface
     protected $authorService;
     protected $addressService;
 
-
-
     public function __construct(
         StorageServiceInterface $storageService,
         BookProviderInterface $bookProvider,
@@ -45,16 +43,18 @@ class BookService implements BookServiceInterface
         $books = Book::search($searchTerm)->latest()->get();
 
         return $books->map(function ($book) {
-            if ($book->image_path) {
-                $book->image_path = $this->storageService->getFileUrl($book->image_path);
-            }
+            $this->getImage($book);
+
             return $book;
         });
     }
 
     public function getBookById(int $id)
     {
-        return Book::findOrFail($id);
+        $book = Book::findOrFail($id);
+        $this->getImage($book);
+
+        return $book;
     }
 
     public function createBook(object $data)
@@ -117,5 +117,12 @@ class BookService implements BookServiceInterface
         }
 
         return $book;
+    }
+
+    private function getImage(Book $book): void
+    {
+        if ($book->image_path) {
+            $book->image_path = $this->storageService->getFileUrl($book->image_path);
+        }
     }
 }

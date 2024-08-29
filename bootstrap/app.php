@@ -16,8 +16,5 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        if ($exceptions instanceof NotFoundProviderException) {
-            return $exceptions;
-        }
-
+        //
     })->create();
