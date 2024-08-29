@@ -171,7 +171,7 @@ class BookService implements BookServiceInterface
                 'title' => $volumeInfo['title'] ?? null,
                 'description' => $volumeInfo['description'] ?? null,
                 'isbn' => $isbn,
-                'year_of_publication' => $volumeInfo['publishedDate'] ?? null,
+                'year_of_publication' => isset($volumeInfo['publishedDate']) ? (int)date('Y', strtotime($volumeInfo['publishedDate'])) : null,
                 'author_id' => $this->findOrCreateAuthor($volumeInfo['authors'][0] ?? null),
                 'image_path' => $volumeInfo['imageLinks']['thumbnail'] ?? null,
             ]);

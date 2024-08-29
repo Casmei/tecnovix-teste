@@ -74,7 +74,7 @@
                     <p class="text-sm text-gray-500 dark:text-gray-400">
                         <span class="font-medium">Street:</span> {{ $book->author->address->street }}
                     </p>
-                    <p clkass="text-sm text-gray-500 dark:text-gray-400">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
                         <span class="font-medium">Complement:</span> {{ $book->author->address->complement }}
                     </p>
                     <p class="text-sm text-gray-500 dark:text-gray-400">
