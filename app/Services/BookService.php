@@ -23,8 +23,6 @@ class BookService implements BookServiceInterface
         BookProviderInterface $bookProvider,
         AuthorServiceInterface $authorService,
         AddressService $addressService
-
-
     )
     {
         $this->storageService = $storageService;

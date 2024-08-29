@@ -26,7 +26,6 @@ class S3StorageService implements StorageServiceInterface
 
     public function getFileUrl(string $path): string
     {
-        //TODO: Não sei a razão pela qual está dando erro aqui!
         return $this->disk->url($path);
     }
 }

@@ -187,7 +187,7 @@
         const isbn = document.getElementById('isbn').value;
 
         if (isbn) {
-            fetch(`/api/books/auto-complete?isbn=${isbn}`, {
+            fetch(`/books/auto-complete?isbn=${isbn}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -219,7 +219,7 @@
         const zip_code = $('#zip_code').inputmask('unmaskedvalue');
 
         if (zip_code) {
-            fetch(`/api/addresses?zip_code=${zip_code}`, {
+            fetch(`/addresses?zip_code=${zip_code}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
