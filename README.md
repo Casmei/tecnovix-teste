@@ -23,18 +23,30 @@ Este projeto é uma aplicação Laravel que utiliza Docker Compose para facilita
     ```
 
     Edite o arquivo `.env` conforme necessário para ajustar configurações específicas, como credenciais do AWS S3, detalhes do banco de dados e as credenciais do google api.
+   | Eu já deixei configurado as envs do banco ☺️
 
-4. **Inicie o Projeto com Docker Compose:**
+5. **Inicie o Projeto com Docker Compose:**
 
     ```bash
-    make start
+    docker compose up --build
     ```
 
-    Este comando inicia todos os serviços definidos no arquivo `docker-compose.yml` e realiza as migrations e o seed.
+    Este comando inicia todos os serviços definidos no arquivo `docker-compose.yml`.
 
-5. **Acesse a Aplicação:**
+6. **Preparando o banco:**
+
+    ```bash
+    docker exec -it laravel_app bash
+    php artisan migrate --seed
+    ```
+
+7. **Acesse a Aplicação:**
 
     Abra o navegador e vá para `http://localhost:8080`.
+
+## Api para busca ou cadastro de livro
+
+Abra o navegador e vá para `http://localhost:8080/books/find-isbn?isbn=856583719X`
 
 ## Débitos Técnicos
 
