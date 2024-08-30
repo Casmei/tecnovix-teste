@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/0273d63a-1e92-47a1-ad9b-56fb068496dd)# Clurook 🇧🇷
+# Clurook 🇧🇷
 
 Este projeto é uma aplicação Laravel que utiliza Docker Compose para facilitar o desenvolvimento e a implantação. O projeto inclui funcionalidades para integração com AWS S3 e busca de livros no Google Books API.
 
