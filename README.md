@@ -61,3 +61,7 @@ Abra o navegador e vá para `http://localhost:8080/books/find-isbn?isbn=85658371
 ## Vou Implementar
 
 - **Documentação com Swagger:** Resolver os problemas encontrados com o Swagger e configurar a documentação da API para facilitar a utilização e o entendimento da API.
+
+Se vc encontrar esse erro, é por conta que as credenciais do seu s3 não está configurada
+![Uploading image.png…]()
+
