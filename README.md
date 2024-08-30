@@ -1,4 +1,4 @@
-# Clurook 🇧🇷
+![image](https://github.com/user-attachments/assets/0273d63a-1e92-47a1-ad9b-56fb068496dd)# Clurook 🇧🇷
 
 Este projeto é uma aplicação Laravel que utiliza Docker Compose para facilitar o desenvolvimento e a implantação. O projeto inclui funcionalidades para integração com AWS S3 e busca de livros no Google Books API.
 
@@ -62,6 +62,8 @@ Abra o navegador e vá para `http://localhost:8080/books/find-isbn?isbn=85658371
 
 - **Documentação com Swagger:** Resolver os problemas encontrados com o Swagger e configurar a documentação da API para facilitar a utilização e o entendimento da API.
 
-Se vc encontrar esse erro, é por conta que as credenciais do seu s3 não está configurada
-![Uploading image.png…]()
+Se vc encontrar esse erro, é por conta que as credenciais do seu s3 não está configurada!
+![image](https://github.com/user-attachments/assets/b598c22a-1261-46ae-aa7b-a692a763fff8)
+
+
 
