@@ -62,6 +62,7 @@ Abra o navegador e vá para `http://localhost:8080/books/find-isbn?isbn=85658371
 ## S3 ERRO
 Caso você tenha seguido todas os passos corretamente, mas ainda sim, ao tentar acessar a página se deparou com o erro a baixo, não se preocupe (ou me desqualifique rsrs), isso acontece pois as credenciais de acesso da AWS para o S3 não foram configuradas, para isso, basta entrar no `.env` e alterar os dados nas envs corretas.
 
+
 Caso você tenha alterado as envs, porém o erro continua, talvez seja por que o laravel tenha realizado cache desses dados, para resolver esse problema, siga os passos a baixo:
 ```bash
 docker exec -it laravel_app bash
@@ -89,5 +90,4 @@ Pronto, com esses passos, o Laravel vai olhar para os novos dados inseridos na e
 2. **Exceções Personalizadas no Laravel:** Enfrentei dificuldades ao lidar com exceções personalizadas no Laravel, principalmente devido a mudanças entre as versões 10 e 11. Não consegui descobrir a tempo como alterar o código de status da exceção conforme necessário.
 
 3. **Env:** Hoje, temos o problema de, uma modificação na env não refletir no projeto, resultando nos passos descritos no erro do S3.
-
 
