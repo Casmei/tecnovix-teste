@@ -14,15 +14,25 @@
         </div>
 
         <div class="sm:pt-20 pt-32">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                @foreach ($books as $book)
-                    <x-book-card :book="$book"/>
-                @endforeach
-            </div>
+            @if ($books->isEmpty())
+                <div class="text-center py-4">
+                    @if (request('query'))
+                        <p class="text-gray-700 dark:text-gray-200">No books found for "{{ request('query') }}". Please try another search.</p>
+                    @else
+                        <p class="text-gray-700 dark:text-gray-200">No books available at the moment.</p>
+                    @endif
+                </div>
+            @else
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    @foreach ($books as $book)
+                        <x-book-card :book="$book"/>
+                    @endforeach
+                </div>
 
-            <div class="mt-4 pagination">
-                {{ $books->links() }}
-            </div>
+                <div class="mt-4 pagination">
+                    {{ $books->links() }}
+                </div>
+            @endif
         </div>
     </div>
 @endsection
