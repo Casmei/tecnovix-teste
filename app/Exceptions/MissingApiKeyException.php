@@ -31,7 +31,7 @@ class MissingApiKeyException extends Exception
     {
         return response()->json([
             'error' => 'Missing API Key',
-            'endpoint' => $this->providerName,
+            'provider' => $this->providerName,
         ], $this->getCode() ?: Response::HTTP_FORBIDDEN);
     }
 }

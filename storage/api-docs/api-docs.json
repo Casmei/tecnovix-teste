@@ -1,0 +1,251 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tecnovix me contrata ❤️",
+        "description": "Documentação para listar todos os endpoints da aplicação!",
+        "contact": {
+            "name": "Tiago de Castro Lima",
+            "email": "casmei@protonmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/addresses": {
+            "get": {
+                "tags": [
+                    "Addresses"
+                ],
+                "summary": "Find address by zip code",
+                "operationId": "429902605464b8b5555671592fcee4fc",
+                "parameters": [
+                    {
+                        "name": "zip_code",
+                        "in": "query",
+                        "description": "Zip code of the address",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 39900000
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Address details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "zip_code": {
+                                            "type": "integer",
+                                            "example": 12345678
+                                        },
+                                        "street": {
+                                            "type": "string",
+                                            "example": "Rua Exemplo"
+                                        },
+                                        "complement": {
+                                            "type": "string",
+                                            "example": "Apartamento 101"
+                                        },
+                                        "unit": {
+                                            "type": "string",
+                                            "example": "Unidade 5"
+                                        },
+                                        "neighborhood": {
+                                            "type": "string",
+                                            "example": "Bairro Exemplo"
+                                        },
+                                        "city": {
+                                            "type": "string",
+                                            "example": "Cidade Exemplo"
+                                        },
+                                        "state": {
+                                            "type": "string",
+                                            "example": "SP"
+                                        },
+                                        "author_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Address not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "Not found",
+                                    "message": "Address with zip code 12345678 not found."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/books/{isbn}": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get book details by ISBN",
+                "operationId": "6e68374e0ad23067b15465f1c42646ae",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "in": "path",
+                        "description": "ISBN of the book",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "8525414654"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "kind": "books#volume",
+                                    "id": "9_-GPQAACAAJ",
+                                    "etag": "xSx8A5mo+mw",
+                                    "selfLink": "https://www.googleapis.com/books/v1/volumes/9_-GPQAACAAJ",
+                                    "volumeInfo": {
+                                        "title": "Misto-quente",
+                                        "authors": [
+                                            "Charles Bukowski",
+                                            "Pedro Gonzaga"
+                                        ],
+                                        "publishedDate": "2006",
+                                        "description": "Para Henry Chinaski -protagonista desta obra-...",
+                                        "industryIdentifiers": [
+                                            {
+                                                "type": "ISBN_10",
+                                                "identifier": "8525414654"
+                                            },
+                                            {
+                                                "type": "ISBN_13",
+                                                "identifier": "9788525414656"
+                                            }
+                                        ],
+                                        "language": "pt-BR",
+                                        "pageCount": 318,
+                                        "categories": [
+                                            "Alcoholics"
+                                        ],
+                                        "previewLink": "http://books.google.com.br/books?id=9_-GPQAACAAJ&dq=isbn:8525414654&hl=&cd=1&source=gbs_api",
+                                        "infoLink": "http://books.google.com.br/books?id=9_-GPQAACAAJ&dq=isbn:8525414654&hl=&source=gbs_api",
+                                        "canonicalVolumeLink": "https://books.google.com/books/about/Misto_quente.html?hl=&id=9_-GPQAACAAJ"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "Not found",
+                                    "provider": "Google Book",
+                                    "message": "Book with ISBN 0005414633 not found."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/books/find-or-create": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Find or create a book by ISBN",
+                "operationId": "05e7ad6ddb4b8bb6f1d538849e2784a4",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "in": "query",
+                        "description": "ISBN of the book",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "8525414654"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request - ISBN is required",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "ISBN is required"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "API key not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "Missing API Key",
+                                    "provider": "Google Book"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "Not found",
+                                    "provider": "Google Book",
+                                    "message": "Book with ISBN 0005414633 not found."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Addresses",
+            "description": "Addresses"
+        },
+        {
+            "name": "Books",
+            "description": "Books"
+        }
+    ]
+}
