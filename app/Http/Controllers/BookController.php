@@ -37,6 +37,10 @@ class BookController extends Controller
         $data = (object) $request->validated();
         $this->bookService->createBook($data);
 
+        flash()
+            ->option('position', 'bottom-right')
+            ->success('Book successfully created');
+
         return redirect()->route('books.list');
     }
 
@@ -76,8 +80,12 @@ class BookController extends Controller
 
     public function update(UpdateBookRequest $request, Book $book)
     {
-        $data = (object) $request->validated();
+            $data = (object) $request->validated();
         $this->bookService->updateBook($book->id, $data);
+
+        flash()
+            ->option('position', 'bottom-right')
+            ->success('Book successfully updated');
 
         return redirect()->route('books.list')->with('success', 'Book updated successfully!');
     }
@@ -85,6 +93,9 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $this->bookService->deleteBook($book->id);
+        flash()
+            ->option('position', 'bottom-right')
+            ->success('Book successfully deleted');
 
         return redirect()->route('books.list');
     }
