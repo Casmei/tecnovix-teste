@@ -43,31 +43,6 @@ Este projeto é uma aplicação Laravel que utiliza Docker Compose para facilita
 
 Abra o navegador e vá para `http://localhost:8080/books/find-isbn?isbn=856583719X`
 
-## S3 ERRO
-Caso você tenha seguido todas os passos corretamente, mas ainda sim, ao tentar acessar a página se deparou com o erro a baixo, não se preocupe (ou me desqualifique rsrs), isso acontece pois as credenciais de acesso da AWS para o S3 não foram configuradas, para isso, basta entrar no `.env` e alterar os dados nas envs corretas.
-
-
-Caso você tenha alterado as envs, porém o erro continua, talvez seja por que o laravel tenha realizado cache desses dados, para resolver esse problema, siga os passos a baixo:
-```bash
-docker exec -it laravel_app bash
-```
-Para entrar dentro do container da aplicação
-
-```bash
-php artisan config:cache
-```
-Para criar um snapshot das configurações atuais
-
-```bash
-php artisan cache:clear
-```
-Para limpar as configurações 
-
-Pronto, com esses passos, o Laravel vai olhar para os novos dados inseridos na env!
-
-> Imagem do erro
-![image](https://github.com/user-attachments/assets/b598c22a-1261-46ae-aa7b-a692a763fff8)
-
 ## Débitos Técnicos
 1. **Integração com AWS S3:** A implementação do AWS S3 foi relativamente simples. No entanto, houve dificuldades na busca de livros na Google Books API, especificamente em como obter e utilizar a URL da imagem para enviar e persistir no bucket S3.
 
