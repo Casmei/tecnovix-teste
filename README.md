@@ -50,12 +50,9 @@ Ao tentar usar o buscador de livros, o sistema utiliza a Api do Google Books, o 
 - Altere a env do projeto
 - Salve as novas envs no projeto
   ```bash
-    docker exec -it laravel_app bash
+    docker compose up app
   ```
-- Limpe o cache de configurações, para pegar as novas envs:
-  ```bash
-    docker exec -it laravel_app bash
-  ```
+- Reinicie o container
 >Imagem da mensagem de erro da Api Key
     <img width="1792" alt="image" src="https://github.com/user-attachments/assets/21e066fb-75f7-4c7c-9473-4f80c134d8bb">
 
