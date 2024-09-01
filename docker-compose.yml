@@ -66,6 +66,7 @@ services:
 
     minio-create-bucket:
         image: minio/mc
+        restart: "no"
         depends_on:
             minio:
                 condition: service_healthy
@@ -91,15 +92,15 @@ services:
         command: server --address ":9099" --console-address ":9000" /data
         volumes:
             - 'minio:/data'
-        restart: "no"
+        restart: "always"
         networks:
             - laravel
         healthcheck:
-            test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
-            interval: 5s
-            retries: 3
-            start_period: 3s
-            timeout: 5s
+            test: [ "CMD", "curl", "-f", "http://localhost:9000/login" ]
+            interval: 10s
+            retries: 5
+            start_period: 30s
+            timeout: 10s
 
 networks:
     laravel:
