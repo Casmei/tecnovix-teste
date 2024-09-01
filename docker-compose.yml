@@ -66,7 +66,7 @@ services:
 
     minio-create-bucket:
         image: minio/mc
-        restart: "no"
+        restart: "always"
         depends_on:
             minio:
                 condition: service_healthy
@@ -96,7 +96,7 @@ services:
         networks:
             - laravel
         healthcheck:
-            test: [ "CMD", "curl", "-f", "http://localhost:9000/login" ]
+            test: ["CMD", "mc", "ready", "local"]
             interval: 10s
             retries: 5
             start_period: 30s
