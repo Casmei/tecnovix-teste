@@ -34,22 +34,6 @@ Este projeto é uma aplicação Laravel que utiliza Docker Compose para facilita
 
     Este comando inicia todos os serviços definidos no arquivo `docker-compose.yml`.
 
-6. **Preparando o ambiente:**
-
-    ```bash
-    docker exec -it laravel_app bash
-    ```
-    Para entrar dentro do container da aplicação
-
-    ```bash
-    composer install
-    ```
-    Instalar as dependências do Laravel
-
-    ```bash
-    php artisan migrate --seed
-    ```
-    Realizar as migrações das tabelas para o banco e popula-lo com dados falsos
    
 8. **Acesse a Aplicação:**
 
