@@ -37,9 +37,13 @@ Este projeto é uma aplicação Laravel que utiliza Docker Compose para facilita
 
 ## Possíveis erros 
 Por que o processo do docker compose morre após determinado tempo?
+
+Isso acontece por que o container `minio-create-bucket` tem uma única função, automatizar a criação de um bucket no Minio, e após isso, o seu processo é finalizado, gerendo a mensagem a baixo por conta do seu healthcheck, mas não se preocupe, todos os outros processos continuam normalmente.
+
 > Imagem mostrando o processo morto
     <img width="1792" alt="image" src="https://github.com/user-attachments/assets/35e0fe9e-7774-409c-8d02-c485172b5f63">
-
+> Imagem mostrando os processos funcionando normalmente
+    <img width="1087" alt="image" src="https://github.com/user-attachments/assets/e2f39ba7-fea0-4ae4-b1c0-e93a1c130f8b">
 
 8. **Acesse a Aplicação:**
 
