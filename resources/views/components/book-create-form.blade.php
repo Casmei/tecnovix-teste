@@ -198,7 +198,8 @@
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    showToast(data.message);
+                    console.log(data)
+                    showToast(data.message || data.error);
                 } else {
                     document.getElementById('title').value = data.volumeInfo.title || '';
                     document.getElementById('author').value = data.volumeInfo.authors ? data.volumeInfo.authors[0] : '';
