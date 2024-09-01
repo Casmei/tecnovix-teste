@@ -23,8 +23,8 @@ Este projeto é uma aplicação Laravel que utiliza Docker Compose para facilita
     ```
    Crie um arquivo `.env` a partir do arquivo de exemplo fornecido.
 
-    Edite o arquivo `.env` conforme necessário para ajustar configurações específicas, como credenciais do AWS S3, detalhes do banco de dados e as credenciais do google api.
-   | Eu já deixei configurado as envs do banco ☺️
+    Eu edite o arquivo conforme o necessário, adicionando as credenciais do AWS S3, banco de dados e Google Books.
+   | Eu já deixei configurado as envs do banco de dados e do AWS S3 (Minio) ☺️
 
 5. **Inicie o Projeto com Docker Compose:**
 
@@ -33,8 +33,14 @@ Este projeto é uma aplicação Laravel que utiliza Docker Compose para facilita
     ```
 
     Este comando inicia todos os serviços definidos no arquivo `docker-compose.yml`.
+---
 
-   
+## Possíveis erros 
+Por que o processo do docker compose morre após determinado tempo?
+> Imagem mostrando o processo morto
+    <img width="1792" alt="image" src="https://github.com/user-attachments/assets/35e0fe9e-7774-409c-8d02-c485172b5f63">
+
+
 8. **Acesse a Aplicação:**
 
     Abra o navegador e vá para `http://localhost:8080`.
