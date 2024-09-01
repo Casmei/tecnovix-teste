@@ -16,12 +16,16 @@ services:
         depends_on:
             db:
                 condition: service_healthy
+            minio-create-bucket:
+                condition: service_started
         healthcheck:
             test: [ "CMD", "php", "artisan", "healthcheck" ]
             interval: 30s
             retries: 3
             start_period: 10s
             timeout: 10s
+        entrypoint: ./docker-entrypoint.sh
+        command: "php-fpm"
 
     nginx:
         image: nginx:latest
@@ -66,7 +70,7 @@ services:
 
     minio-create-bucket:
         image: minio/mc
-        restart: "always"
+        restart: "no"
         depends_on:
             minio:
                 condition: service_healthy
@@ -96,10 +100,10 @@ services:
         networks:
             - laravel
         healthcheck:
-            test: ["CMD", "mc", "ready", "local"]
+            test: ["CMD", "mc", "ready", "play"]
             interval: 10s
             retries: 5
-            start_period: 30s
+            start_period: 6s
             timeout: 10s
 
 networks:
