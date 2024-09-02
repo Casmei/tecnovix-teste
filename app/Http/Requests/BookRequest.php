@@ -27,7 +27,7 @@ class BookRequest extends FormRequest
             'description' => 'nullable|string',
             'year_of_publication' => 'required|digits:4|integer|lte:' . now()->year,
             'isbn' => 'required|string|size:10|unique:books,isbn',
-            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:min_width=300,min_height=400,max_width=600,max_height=800',
             'zip_code' => 'required|integer|digits:8',
             'street' => 'required|string|max:255',
             'complement' => 'nullable|string|max:100',
